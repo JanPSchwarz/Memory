@@ -257,7 +257,7 @@ export default function MemoryCards({
                   guessedRightIndices.includes(index) &&
                     `bg-colorPreset2 transition delay-700`,
                   grid === "6x6" && `text-sizePreset4 md:text-sizePreset6`,
-                  grid === "6x6" && theme === "Icons" && `text-sizePreset8`,
+                  grid === "6x6" && theme === "Icons" && `text-sizePreset5`,
                 )}
               >
                 {theme === "Numbers" ? number : <Icon number={number} />}

@@ -76,7 +76,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0.8 }}
             animate={{ opacity: 1 }}
-            className={`absolute z-10 h-screen w-screen bg-colorPreset5`}
+            className={`absolute z-10 h-dvh w-screen bg-colorPreset5`}
           >
             <Spinner
               className={`absolute left-[calc(50%-30px)] top-[calc(50%-30px)] h-[60px] w-[60px]`}

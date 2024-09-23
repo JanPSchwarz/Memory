@@ -116,7 +116,7 @@ export default function GameBoard({
   return (
     <>
       <div
-        className={`flex h-screen w-screen flex-col justify-between bg-colorPreset5`}
+        className={`flex h-dvh w-screen flex-col justify-between bg-colorPreset5`}
       >
         <Header
           refreshGameSettings={refreshGameSettings}

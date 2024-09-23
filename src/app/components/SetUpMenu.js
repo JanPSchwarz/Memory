@@ -24,7 +24,7 @@ export default function SetUpMenu({
 
   return (
     <div
-      className={`flex h-screen flex-col items-center justify-center gap-12 bg-colorPreset4`}
+      className={`flex h-dvh flex-col items-center justify-center gap-12 bg-colorPreset4`}
     >
       <p className={`text-sizePreset5 text-colorPreset8 md:text-sizePreset6`}>
         memory
