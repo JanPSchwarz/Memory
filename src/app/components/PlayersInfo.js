@@ -54,6 +54,7 @@ export default function PlayersInfo({
               const shortTitle = `P` + `${index + 1}`;
               return (
                 <InfoBox
+                  key={index}
                   selected={
                     title === currentPlayer && `bg-colorPreset1 ${topArrow}`
                   }

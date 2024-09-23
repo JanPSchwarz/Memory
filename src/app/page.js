@@ -44,7 +44,7 @@ export default function Home() {
     const timerOut = setTimeout(() => {
       setIsGame(true);
       setRestartGame(false);
-    }, 1200);
+    }, 1500);
 
     return () => clearTimeout(timerOut);
   }
@@ -74,12 +74,12 @@ export default function Home() {
           </motion.div>
         ) : restartGame ? (
           <motion.div
-            initial={{ opacity: 0.5 }}
+            initial={{ opacity: 0.8 }}
             animate={{ opacity: 1 }}
-            className={`absolute z-10 h-screen w-screen bg-colorPreset8 opacity-100`}
+            className={`absolute z-10 h-screen w-screen bg-colorPreset5`}
           >
             <Spinner
-              className={`absolute left-[calc(50%-15px)] top-[calc(50%-15px)] h-[30px] w-[30px]`}
+              className={`absolute left-[calc(50%-30px)] top-[calc(50%-30px)] h-[60px] w-[60px]`}
             />
           </motion.div>
         ) : (

@@ -44,12 +44,15 @@ export default function GameBoard({
     setTimerID(timerInterval);
   }
 
-  const stopTimer = useCallback((id) => {
-    if (timerID) {
-      clearInterval(id);
-      setTimerID();
-    }
-  });
+  const stopTimer = useCallback(
+    (id) => {
+      if (timerID) {
+        clearInterval(id);
+        setTimerID();
+      }
+    },
+    [timerID],
+  );
   //
 
   //mulit-player
