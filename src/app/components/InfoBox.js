@@ -12,7 +12,7 @@ export default function InfoBox({
   return (
     <div
       className={twMerge(
-        `relative flex flex-1 flex-col items-center rounded-md bg-colorPreset9 py-2 text-colorPreset3 transition duration-200 ease-in-out`,
+        `relative flex flex-1 flex-col items-center rounded-md bg-colorPreset9 py-2 text-colorPreset3 transition duration-200 ease-in-out md:flex-row md:justify-around`,
         selected,
         className,
       )}

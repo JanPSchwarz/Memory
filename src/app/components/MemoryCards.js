@@ -235,7 +235,7 @@ export default function MemoryCards({
         className={twMerge(
           `grid max-h-[480px] w-[90vw] max-w-[480px] grid-cols-4 place-items-center gap-4 text-colorPreset5 md:gap-5 lg:gap-7`,
           grid === "6x6" &&
-            `max-h-[572px] max-w-[572px] grid-cols-6 gap-2 md:gap-6`,
+            `max-h-[572px] max-w-[572px] grid-cols-6 gap-2 md:gap-6 lg:gap-4`,
         )}
       >
         {memory.map((number, index) => {

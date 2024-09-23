@@ -37,7 +37,7 @@ export default function PlayersInfo({
       className={`my-10 flex w-[90vw] max-w-[1200px] justify-center self-center`}
     >
       <div
-        className={`flex w-[90%] items-center justify-center gap-4 text-center`}
+        className={`flex w-[90%] max-w-[700px] items-center justify-center gap-4 text-center`}
       >
         {isSinglePlayer
           ? singlePlayer.map((singlePlayer, index) => {
