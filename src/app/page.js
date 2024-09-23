@@ -55,15 +55,10 @@ export default function Home() {
         {isGame ? (
           <motion.div
             key="board"
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 60,
-              damping: 12,
-              duration: 0.3,
-            }}
-            exit={{ x: "100%" }}
+            initial={{ opacity: 0.5, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0, y: -20 }}
           >
             <GameBoard
               restartGame={restart}
@@ -74,9 +69,11 @@ export default function Home() {
           </motion.div>
         ) : restartGame ? (
           <motion.div
-            initial={{ opacity: 0.8 }}
-            animate={{ opacity: 1 }}
-            className={`absolute z-10 h-dvh w-screen bg-colorPreset5`}
+            initial={{ opacity: 0.5, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`relative z-10 h-dvh w-screen bg-colorPreset5`}
           >
             <Spinner
               className={`absolute left-[calc(50%-30px)] top-[calc(50%-30px)] h-[60px] w-[60px]`}
@@ -85,15 +82,10 @@ export default function Home() {
         ) : (
           <motion.div
             key="menu"
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 60,
-              damping: 12,
-              duration: 0.3,
-            }}
-            exit={{ x: "-100%" }}
+            initial={{ opacity: 0.5, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0, y: -20 }}
           >
             <SetUpMenu
               gameSettings={gameSettings}
