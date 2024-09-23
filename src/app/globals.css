@@ -3,8 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-preset1: 253, 162, 20;
+  --color-preset2: 188, 206, 217;
+  --color-preset3: 48, 72, 89;
+  --color-preset4: 21, 41, 56;
+  --color-preset5: 242, 242, 242;
+  --color-preset6: 112, 145, 166;
+  --color-preset7: 99, 149, 184;
+  --color-preset8: 252, 252, 252;
+  --color-preset9: 223, 231, 236;
+  --color-preset10: 151, 151, 151;
+
+  --size-preset1: 16px;
+  --size-preset2: 18px;
+  --size-preset3: 20px;
+  --size-preset4: 24px;
+  --size-preset5: 32px;
+  --size-preset6: 40px;
+  --size-preset7: 44px;
+  --size-preset8: 48px;
+  --size-preset9: 56px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,9 +33,8 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--default);
+  font-weight: bold;
 }
 
 @layer utilities {
