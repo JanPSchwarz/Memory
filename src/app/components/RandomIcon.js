@@ -7,9 +7,5 @@ export default function RandomIcon({ number }) {
 
   if (!RandomIcon) return <p>?</p>;
 
-  return (
-    <>
-      <RandomIcon />
-    </>
-  );
+  return <RandomIcon />;
 }

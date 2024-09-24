@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import Spinner from "../../../public/svg/spinner.svg";
+import AnimatedIcon from "@/app/components/AnimatedIcon";
 
-const RandomIcon = dynamic(() => import(`@/app/components/RandomIcon`), {
-  loading: () => <Spinner className={`w-[50%]`}>...</Spinner>,
-});
+const RandomIcon = lazy(() => import(`@/app/components/RandomIcon`));
 
 export default function MemoryCards({
   gameSettings,
@@ -223,16 +221,12 @@ export default function MemoryCards({
     }
   }
 
-  // Icon component takes: formerly randomized Number between 0 and 500 passed from "memory" Array within map() in JSX && imported Icons Object
-  // function Icon({ number }) {
-  //   const randomIconName = Object.keys(Icons)[number];
-
-  //   const RandomIcon = Icons[randomIconName];
-
-  //   if (!RandomIcon) return <p>?</p>;
-
-  //   return <RandomIcon />;
-  // }
+  const Loading = (
+    <div className={`absolute flex flex-col items-center justify-center gap-8`}>
+      <Spinner />
+      <p className={`text-center text-zinc-800`}>Loading Icons...</p>
+    </div>
+  );
 
   return (
     <div className={`flex items-center justify-center`}>
@@ -243,33 +237,39 @@ export default function MemoryCards({
             `max-h-[572px] max-w-[572px] grid-cols-6 gap-2 md:gap-6 lg:gap-4`,
         )}
       >
-        {memory.map((number, index) => {
-          return (
-            <motion.button
-              key={index}
-              transition={{ duration: 0.6 }}
-              animate={{ rotateY: flippedCards[index] ? 180 : 0 }}
-              style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
-              className={`aspect-square w-full rounded-full bg-colorPreset3 hover:bg-colorPreset7`}
-              value={number}
-              onClick={(event) => {
-                pickCard(event.target.value, index);
-              }}
-            >
-              <span
-                className={twMerge(
-                  `flex h-full w-full items-center justify-center rounded-full bg-colorPreset1 text-sizePreset6 [backfaceVisibility:hidden] [transform:rotateY(180deg)] md:text-sizePreset9`,
-                  guessedRightIndices.includes(index) &&
-                    `bg-colorPreset2 transition delay-700`,
-                  grid === "6x6" && `text-sizePreset4 md:text-sizePreset6`,
-                  grid === "6x6" && theme === "Icons" && `text-sizePreset5`,
-                )}
+        <Suspense fallback={Loading}>
+          {memory.map((number, index) => {
+            return (
+              <motion.button
+                key={index}
+                transition={{ duration: 0.6 }}
+                animate={{ rotateY: flippedCards[index] ? 180 : 0 }}
+                style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
+                className={`aspect-square w-full rounded-full bg-colorPreset3 hover:bg-colorPreset7`}
+                value={number}
+                onClick={(event) => {
+                  pickCard(event.target.value, index);
+                }}
               >
-                {theme === "Numbers" ? number : <RandomIcon number={number} />}
-              </span>
-            </motion.button>
-          );
-        })}
+                <span
+                  className={twMerge(
+                    `flex h-full w-full items-center justify-center rounded-full bg-colorPreset1 text-sizePreset6 [backfaceVisibility:hidden] [transform:rotateY(180deg)] md:text-sizePreset9`,
+                    guessedRightIndices.includes(index) &&
+                      `bg-colorPreset2 transition delay-700`,
+                    grid === "6x6" && `text-sizePreset4 md:text-sizePreset6`,
+                    grid === "6x6" && theme === "Icons" && `text-sizePreset5`,
+                  )}
+                >
+                  {theme === "Numbers" ? (
+                    number
+                  ) : (
+                    <RandomIcon number={number} />
+                  )}
+                </span>
+              </motion.button>
+            );
+          })}
+        </Suspense>
       </div>
     </div>
   );

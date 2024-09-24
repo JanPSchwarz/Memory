@@ -2,9 +2,9 @@
 
 import SetUpMenu from "@/app/components/SetUpMenu";
 import GameBoard from "@/app/components/GameBoard";
-import { useState } from "react";
+import AnimatedIcon from "@/app/components/AnimatedIcon";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Spinner from "../../public/svg/spinner.svg";
 
 export default function Home() {
   const [gameSettings, setGameSettings] = useState({
@@ -12,6 +12,16 @@ export default function Home() {
     players: 1,
     grid: "4x4",
   });
+
+  const [startAnimation, setStartAnimation] = useState(true);
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setStartAnimation(false);
+    }, 1600);
+
+    return () => clearTimeout(timeOut);
+  }, []);
 
   const [isGame, setIsGame] = useState(false);
 
@@ -51,7 +61,8 @@ export default function Home() {
 
   return (
     <>
-      <AnimatePresence initial={false} mode="popLayout">
+      {startAnimation && <AnimatedIcon />}
+      <AnimatePresence mode="popLayout">
         {isGame ? (
           <motion.div
             key="board"
@@ -68,17 +79,7 @@ export default function Home() {
             />
           </motion.div>
         ) : restartGame ? (
-          <motion.div
-            initial={{ opacity: 0.5, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            exit={{ opacity: 0, y: -20 }}
-            className={`relative z-10 h-dvh w-screen bg-colorPreset5`}
-          >
-            <Spinner
-              className={`absolute left-[calc(50%-30px)] top-[calc(50%-30px)] h-[60px] w-[60px]`}
-            />
-          </motion.div>
+          <AnimatedIcon />
         ) : (
           <motion.div
             key="menu"
