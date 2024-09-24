@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
-import * as Icons from "react-icons/fa";
+import dynamic from "next/dynamic";
+import Spinner from "../../../public/svg/spinner.svg";
+
+const RandomIcon = dynamic(() => import(`@/app/components/RandomIcon`), {
+  loading: () => <Spinner className={`w-[50%]`}>...</Spinner>,
+});
 
 export default function MemoryCards({
   gameSettings,
@@ -219,15 +224,15 @@ export default function MemoryCards({
   }
 
   // Icon component takes: formerly randomized Number between 0 and 500 passed from "memory" Array within map() in JSX && imported Icons Object
-  function Icon({ number }) {
-    const randomIconName = Object.keys(Icons)[number];
+  // function Icon({ number }) {
+  //   const randomIconName = Object.keys(Icons)[number];
 
-    const RandomIcon = Icons[randomIconName];
+  //   const RandomIcon = Icons[randomIconName];
 
-    if (!RandomIcon) return <p>?</p>;
+  //   if (!RandomIcon) return <p>?</p>;
 
-    return <RandomIcon />;
-  }
+  //   return <RandomIcon />;
+  // }
 
   return (
     <div className={`flex items-center justify-center`}>
@@ -260,7 +265,7 @@ export default function MemoryCards({
                   grid === "6x6" && theme === "Icons" && `text-sizePreset5`,
                 )}
               >
-                {theme === "Numbers" ? number : <Icon number={number} />}
+                {theme === "Numbers" ? number : <RandomIcon number={number} />}
               </span>
             </motion.button>
           );
