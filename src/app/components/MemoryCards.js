@@ -1,8 +1,7 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
-import Spinner from "../../../public/svg/spinner.svg";
-import AnimatedIcon from "@/app/components/AnimatedIcon";
+import Spinner from "@/app/components/Spinner";
 
 const RandomIcon = lazy(() => import(`@/app/components/RandomIcon`));
 
@@ -74,7 +73,7 @@ export default function MemoryCards({
   useEffect(() => {
     if (secondCardIndex !== undefined) {
       flipCard(secondCardIndex);
-      addMoveCounter();
+      if (isSinglePlayer) addMoveCounter();
     }
   }, [secondCardIndex]);
 
@@ -84,12 +83,12 @@ export default function MemoryCards({
     }
   }, [secondCardValue]);
 
-  // after refresh was triggered (by updateGuessedPairs())
+  //  after refresh was triggered (by updateGuessedPairs())
   useEffect(() => {
     let timeOuts;
     if (refresh) {
       const guessedRight = firstCardValue === secondCardValue;
-      const delay = guessedRight ? 600 : 1000;
+      const delay = guessedRight ? 300 : 800;
       timeOuts = refreshState(delay);
     }
     return () => {
@@ -100,16 +99,11 @@ export default function MemoryCards({
   // only for multiplayer: updates counter after second card draft
   useEffect(() => {
     if (!isSinglePlayer && secondCardValue !== undefined) {
-      let timeout;
       if (secondCardValue === firstCardValue) {
         addGuessedRightCounter(currentPlayer);
-        timeout = setTimeout(() => {}, 0);
       } else {
-        // timeOut for flipping animation
         nextPlayer();
-        timeout = setTimeout(() => {}, 0);
       }
-      return () => clearTimeout(timeout);
     }
   }, [secondCardValue]);
 
@@ -135,21 +129,18 @@ export default function MemoryCards({
 
     const timeOut2 = setTimeout(() => {
       setRefresh(false);
-    }, delay + 250);
+    }, delay + 200);
 
     const timeOut3 = setTimeout(() => {
       setFirstCard({
         firstCardValue: undefined,
         firstCardIndex: undefined,
       });
-      setSecondCard(
-        {
-          secondCardValue: undefined,
-          secondCardIndex: undefined,
-        },
-        delay,
-      );
-    });
+      setSecondCard({
+        secondCardValue: undefined,
+        secondCardIndex: undefined,
+      });
+    }, delay);
 
     timeOuts.push(timeOut1, timeOut2, timeOut3);
     return timeOuts;
@@ -177,7 +168,7 @@ export default function MemoryCards({
   function generateMemoryPairs() {
     const numbers = [];
 
-    const maxRandomNumber = theme === "Numbers" ? 100 : 500;
+    const maxRandomNumber = theme === "Numbers" ? 100 : 1600;
     const memoryPairs = grid === "4x4" ? 8 : 18;
 
     while (numbers.length < memoryPairs) {
@@ -221,13 +212,6 @@ export default function MemoryCards({
     }
   }
 
-  const Loading = (
-    <div className={`absolute flex flex-col items-center justify-center gap-8`}>
-      <Spinner />
-      <p className={`text-center text-zinc-800`}>Loading Icons...</p>
-    </div>
-  );
-
   return (
     <div className={`flex items-center justify-center`}>
       <div
@@ -237,12 +221,14 @@ export default function MemoryCards({
             `max-h-[572px] max-w-[572px] grid-cols-6 gap-2 md:gap-6 lg:gap-4`,
         )}
       >
-        <Suspense fallback={Loading}>
+        <Suspense fallback={<Spinner />}>
           {memory.map((number, index) => {
             return (
               <motion.button
                 key={index}
-                transition={{ duration: 0.6 }}
+                transition={{
+                  duration: 0.4,
+                }}
                 animate={{ rotateY: flippedCards[index] ? 180 : 0 }}
                 style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
                 className={`aspect-square w-full rounded-full bg-colorPreset3 hover:bg-colorPreset7`}
