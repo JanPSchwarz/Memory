@@ -229,9 +229,12 @@ export default function MemoryCards({
                 transition={{
                   duration: 0.4,
                 }}
-                animate={{ rotateY: flippedCards[index] ? 180 : 0 }}
+                animate={{
+                  rotateY: flippedCards[index] ? 180 : 0,
+                  scale: flippedCards[index] ? [1, 1.15, 1] : 1,
+                }}
                 style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
-                className={`aspect-square w-full rounded-full bg-colorPreset3 hover:bg-colorPreset7`}
+                className={`hover:bg-colorPreset7} aspect-square w-full rounded-full bg-colorPreset3`}
                 value={number}
                 onClick={(event) => {
                   pickCard(event.target.value, index);
