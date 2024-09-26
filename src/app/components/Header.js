@@ -13,6 +13,8 @@ export default function Header({
   const [isMobile, setIsMobile] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
+  console.log(showModal);
+
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState({
     message: "",
@@ -112,7 +114,9 @@ export default function Header({
         >
           {isMobile ? (
             <Button
-              onClickFunction={() => setShowModal(true)}
+              onClickFunction={() => {
+                setShowModal(true);
+              }}
               className={`bg-colorPreset1 px-5 text-colorPreset8`}
             >
               Menu
@@ -128,13 +132,20 @@ export default function Header({
 
       <AnimatePresence>
         {showModal && (
-          <Modal exitAnimation clickBackground={() => setShowModal(!showModal)}>
+          <Modal
+            exitAnimation
+            clickBackground={() => {
+              setShowModal(!showModal);
+            }}
+          >
             <div className={`flex w-[70vw] flex-col gap-4`}>
               <RestartGameButton />
               <NewGameButton />
               <Button
                 className={`text-nowrap bg-colorPreset9 px-5 text-colorPreset3`}
-                onClickFunction={setShowModal(!showModal)}
+                onClickFunction={() => {
+                  setShowModal(!showModal);
+                }}
               >
                 Resume Game
               </Button>

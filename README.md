@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend Mentor - Space tourism website solution
 
-## Getting Started
+Here is my solution to the [Space tourism website challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/space-tourism-multipage-website-gRWj1URZ3)
 
-First, run the development server:
+Frontend Mentor provided me with professional Figma Designs.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### The Challenge
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Users should be able to:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- View the optimal layout for the game depending on their device's screen size
+- See hover states for all interactive elements on the page
+- Play the Memory game either solo or multiplayer (up to 4 players)
+- Set the theme to use numbers or icons within the tiles
+- Choose to play on either a 6x6 or 4x4 grid
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+I added some extra features on my behalf:
 
-## Learn More
+- animations for visuality and haptic feedback
+- custom loading screen
+- confirm messages before leaving/restarting game for UX
+- logic for randomised Icons dynamically picked out of a library of more than 1600 items
 
-To learn more about Next.js, take a look at the following resources:
+## Screenshots
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<img src="public/screenshots/collection.png" width="700"/>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Video
 
-## Deploy on Vercel
+<video src="public/screenshots/video.mp4" controls width="150" height="auto"></video>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Links
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Live Site URL: [Memory](https://memory-phi-six.vercel.app/)
+
+### Built with
+
+- [Next.js](https://nextjs.org/) 14.2.7 - App Router
+  - including [React](https://react.dev/)
+- [TailwindCSS](https://tailwindcss.com/) - For styles
+- [Framer-Motion](https://www.framer.com/motion/) for page transitions
+- Mobile-first workflow
+- Deployed over [Vercel](https://vercel.com/)
