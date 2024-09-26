@@ -1,6 +1,6 @@
-# Frontend Mentor - Space tourism website solution
+# Frontend Mentor - Memory App
 
-Here is my solution to the [Space tourism website challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/space-tourism-multipage-website-gRWj1URZ3)
+This is a solution to the [Memory game challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/memory-game-vse4WFPvM). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
 Frontend Mentor provided me with professional Figma Designs.
 
