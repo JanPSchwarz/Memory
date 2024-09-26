@@ -1,7 +1,5 @@
 import Header from "@/app/components/Header";
-import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import ConfirmMessage from "@/app/components/ConfirmMessage";
+import { useEffect, useState } from "react";
 import MemoryCards from "@/app/components/MemoryCards";
 import PlayersInfo from "@/app/components/PlayersInfo";
 import Score from "@/app/components/Score";
@@ -23,7 +21,7 @@ export default function GameBoard({
   useEffect(() => {
     if (gameIsSolved) {
       if (isSinglePlayer) {
-        stopTimer(timerID);
+        timerControls.stop();
       }
     }
   }, [gameIsSolved]);
@@ -32,27 +30,45 @@ export default function GameBoard({
   const [moveCounter, setMoveCounter] = useState(0);
   const [timer, setTimer] = useState(0);
   const [timerID, setTimerID] = useState();
+  const [timerPaused, setTimerPaused] = useState(false);
 
-  const addMoveCounter = useCallback(() => {
+  function addMoveCounter() {
     setMoveCounter((prev) => prev + 1);
-  }, []);
-
-  function startTimer() {
-    const timerInterval = setInterval(() => {
-      if (timer < 3600) setTimer((prev) => prev + 1);
-    }, 1000);
-    setTimerID(timerInterval);
   }
 
-  const stopTimer = useCallback(
-    (id) => {
+  function intervallControls() {
+    function start() {
+      if (!timerID) {
+        const id = setInterval(() => {
+          if (timer < 3600) setTimer((prevTime) => prevTime + 1);
+        }, 1000);
+        setTimerID(id);
+      }
+    }
+    function stop() {
       if (timerID) {
-        clearInterval(id);
+        clearInterval(timerID);
         setTimerID();
       }
-    },
-    [timerID],
-  );
+    }
+    function pause() {
+      clearInterval(timerID);
+      setTimerPaused(true);
+    }
+    function resume() {
+      if (timerPaused) {
+        setTimerPaused(false);
+        const id = setInterval(() => {
+          setTimer((prev) => prev + 1);
+        }, 1000);
+        setTimerID(id);
+      }
+    }
+
+    return { start, stop, pause, resume };
+  }
+
+  const timerControls = new intervallControls();
   //
 
   //mulit-player
@@ -67,16 +83,16 @@ export default function GameBoard({
 
   const [currentPlayer, setCurrentPlayer] = useState("Player 1");
 
-  const nextPlayer = useCallback(() => {
+  function nextPlayer() {
     const player = Object.keys(guessedRightCounter);
     const currentIndex = player.indexOf(currentPlayer);
     const timeout = setTimeout(() => {
       setCurrentPlayer(player[(currentIndex + 1) % player.length]);
     }, 1000);
     return () => clearTimeout(timeout);
-  }, [currentPlayer, guessedRightCounter]);
+  }
 
-  const addGuessedRightCounter = useCallback((player) => {
+  function addGuessedRightCounter(player) {
     const timeOut = setTimeout(() => {
       setGuessedRightCounter((prev) => ({
         ...prev,
@@ -84,51 +100,24 @@ export default function GameBoard({
       }));
     }, 800);
     return () => clearTimeout(timeOut);
-  }, []);
-
-  //
-
-  // global dialog useState to controll confirm messages throughout the games
-  const [showConfirmMessage, setShowConfirmMessage] = useState(false);
-  const [confirmMessage, setConfirmMessage] = useState({
-    message: "",
-    question: "",
-    confirmFunction: "",
-    closeFunction: "",
-  });
-
-  // handleConfirmMessage function can be passed to set up the message and trigger it right away
-  function handleConfirmMessage(
-    confirmFunction,
-    question,
-    message,
-    cancelFunction,
-  ) {
-    setShowConfirmMessage(!showConfirmMessage);
-    setConfirmMessage({
-      confirmFunction,
-      message,
-      question,
-      cancelFunction,
-    });
   }
-  //
+
   return (
     <>
       <div
         className={`flex h-dvh w-screen flex-col justify-between bg-colorPreset5`}
       >
         <Header
+          timerControls={timerControls}
           refreshGameSettings={refreshGameSettings}
           stopGame={stopGame}
-          handleConfirmMessage={handleConfirmMessage}
           restartGame={restartGame}
         />
         <MemoryCards
           solvedGame={solvedGame}
           isSinglePlayer={isSinglePlayer}
           timerID={timerID}
-          startTimer={startTimer}
+          timerControls={timerControls}
           addGuessedRightCounter={addGuessedRightCounter}
           currentPlayer={currentPlayer}
           nextPlayer={nextPlayer}
@@ -156,16 +145,6 @@ export default function GameBoard({
           />
         )}
       </div>
-      <AnimatePresence>
-        {showConfirmMessage && (
-          <ConfirmMessage
-            question={confirmMessage.question}
-            message={confirmMessage.message}
-            confirmFunction={confirmMessage.confirmFunction}
-            closeFunction={handleConfirmMessage}
-          />
-        )}
-      </AnimatePresence>
     </>
   );
 }

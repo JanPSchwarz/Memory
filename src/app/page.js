@@ -51,12 +51,12 @@ export default function Home() {
     setRestartGame(true);
     setIsGame(false);
 
-    const timerOut = setTimeout(() => {
+    const timeOut = setTimeout(() => {
       setIsGame(true);
       setRestartGame(false);
     }, 1500);
 
-    return () => clearTimeout(timerOut);
+    return () => clearTimeout(timeOut);
   }
 
   return (

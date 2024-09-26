@@ -7,7 +7,12 @@ export default function AnimatedIcon() {
   const { width, height } = Memory().props;
 
   return (
-    <div className={`absolute z-10 h-dvh w-screen bg-colorPreset5`}>
+    <motion.div
+      initial={{ opacity: 0.5, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className={`absolute z-10 h-dvh w-screen bg-colorPreset5`}
+    >
       <motion.svg
         xmlns={`http://www.w3.org/2000/svg`}
         width={width}
@@ -21,10 +26,14 @@ export default function AnimatedIcon() {
           strokeWidth={strokeWidth}
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
-          exit={{ opacity: 0.8 }}
-          transition={{ type: "spring", duration: 10, bounce: 0 }}
+          transition={{
+            type: "spring",
+            mass: 2,
+            stiffness: 30,
+            damping: 120,
+          }}
         />
       </motion.svg>
-    </div>
+    </motion.div>
   );
 }

@@ -12,7 +12,7 @@ export default function MemoryCards({
   nextPlayer,
   currentPlayer,
   solvedGame,
-  startTimer,
+  timerControls,
   timerID,
   isSinglePlayer,
 }) {
@@ -64,7 +64,7 @@ export default function MemoryCards({
     if (firstCardIndex !== undefined) {
       flipCard(firstCardIndex);
       if (isSinglePlayer && !timerID) {
-        startTimer();
+        timerControls.start();
       }
     }
   }, [firstCardIndex]);

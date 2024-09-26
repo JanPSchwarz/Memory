@@ -1,16 +1,41 @@
 import { useState, useEffect } from "react";
 import Button from "@/app/components/Button";
+import ConfirmMessage from "@/app/components/ConfirmMessage";
 import Modal from "@/app/components/Modal";
 import { AnimatePresence } from "framer-motion";
 
 export default function Header({
-  handleConfirmMessage,
+  timerControls,
   stopGame,
   refreshGameSettings,
   restartGame,
 }) {
   const [isMobile, setIsMobile] = useState(true);
   const [showModal, setShowModal] = useState(false);
+
+  const [showConfirmMessage, setShowConfirmMessage] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState({
+    message: "",
+    question: "",
+    confirmFunction: "",
+    closeFunction: "",
+  });
+
+  // handleConfirmMessage function can be passed to set up the message and trigger it right away
+  function handleConfirmMessage(
+    confirmFunction,
+    question,
+    message,
+    cancelFunction,
+  ) {
+    setShowConfirmMessage(!showConfirmMessage);
+    setConfirmMessage({
+      confirmFunction,
+      message,
+      question,
+      cancelFunction,
+    });
+  }
 
   useEffect(() => {
     function isMobile() {
@@ -27,9 +52,16 @@ export default function Header({
     };
   }, []);
 
-  function toggleModal() {
-    setShowModal(!showModal);
-  }
+  // both UE controll timer
+  useEffect(() => {
+    if (showModal) timerControls.pause();
+    else timerControls.resume();
+  }, [showModal]);
+
+  useEffect(() => {
+    if (!isMobile && showConfirmMessage) timerControls.pause();
+    else if (!isMobile) timerControls.resume();
+  }, [showConfirmMessage]);
 
   const NewGameButton = () => {
     return (
@@ -96,18 +128,28 @@ export default function Header({
 
       <AnimatePresence>
         {showModal && (
-          <Modal exitAnimation clickBackground={() => toggleModal()}>
+          <Modal exitAnimation clickBackground={() => setShowModal(!showModal)}>
             <div className={`flex w-[70vw] flex-col gap-4`}>
               <RestartGameButton />
               <NewGameButton />
               <Button
                 className={`text-nowrap bg-colorPreset9 px-5 text-colorPreset3`}
-                onClickFunction={toggleModal}
+                onClickFunction={setShowModal(!showModal)}
               >
                 Resume Game
               </Button>
             </div>
           </Modal>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showConfirmMessage && (
+          <ConfirmMessage
+            question={confirmMessage.question}
+            message={confirmMessage.message}
+            confirmFunction={confirmMessage.confirmFunction}
+            closeFunction={handleConfirmMessage}
+          />
         )}
       </AnimatePresence>
     </>
