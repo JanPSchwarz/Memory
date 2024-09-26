@@ -1,4 +1,5 @@
 import { Atkinson_Hyperlegible } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const atkinsonHyperlegible = Atkinson_Hyperlegible({
