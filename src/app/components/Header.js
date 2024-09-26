@@ -13,8 +13,6 @@ export default function Header({
   const [isMobile, setIsMobile] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  console.log(showModal);
-
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState({
     message: "",
@@ -23,7 +21,21 @@ export default function Header({
     closeFunction: "",
   });
 
-  // handleConfirmMessage function can be passed to set up the message and trigger it right away
+  // * browser default prompt on reload
+  // ! not working on iOs
+  useEffect(() => {
+    function beforeUnload(event) {
+      event.preventDefault();
+      event.returnValue = ``;
+      return ``;
+    }
+
+    window.addEventListener(`beforeunload`, beforeUnload);
+
+    return () => window.removeEventListener(`beforeunload`, beforeUnload);
+  }, []);
+
+  //* handleConfirmMessage function can be passed to set up the message and trigger it right away
   function handleConfirmMessage(
     confirmFunction,
     question,
@@ -54,7 +66,7 @@ export default function Header({
     };
   }, []);
 
-  // both UE controll timer
+  //* both UE controll timer
   useEffect(() => {
     if (showModal) timerControls.pause();
     else timerControls.resume();

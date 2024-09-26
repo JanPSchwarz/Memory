@@ -10,7 +10,7 @@ export default function GameBoard({
   gameSettings,
   restartGame,
 }) {
-  // general
+  // * general
   const [isSinglePlayer] = useState(gameSettings.players === 1);
   const [gameIsSolved, setGameIsSolved] = useState(false);
 
@@ -26,7 +26,7 @@ export default function GameBoard({
     }
   }, [gameIsSolved]);
 
-  // single-player
+  // * single-player
   const [moveCounter, setMoveCounter] = useState(0);
   const [timer, setTimer] = useState(0);
   const [timerID, setTimerID] = useState();
@@ -52,8 +52,10 @@ export default function GameBoard({
       }
     }
     function pause() {
-      clearInterval(timerID);
-      setTimerPaused(true);
+      if (timerID) {
+        clearInterval(timerID);
+        setTimerPaused(true);
+      }
     }
     function resume() {
       if (timerPaused) {
@@ -71,7 +73,7 @@ export default function GameBoard({
   const timerControls = new intervallControls();
   //
 
-  //mulit-player
+  // * mulit-player
   const [guessedRightCounter, setGuessedRightCounter] = useState(() => {
     const players = {};
     for (let i = 0; i < gameSettings.players; i++) {
