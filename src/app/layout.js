@@ -1,5 +1,7 @@
 import { Atkinson_Hyperlegible } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
+
 import "./globals.css";
 
 const atkinsonHyperlegible = Atkinson_Hyperlegible({
@@ -19,6 +21,7 @@ export default function RootLayout({ children }) {
       <body className={`${atkinsonHyperlegible.variable} antialiased`}>
         {children}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
