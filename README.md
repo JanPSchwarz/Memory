@@ -23,9 +23,13 @@ I added some extra features on my behalf:
 
 ## Screenshots
 
-<img src="public/screenshots/collection.png" width="700"/>
+<img src="public/screenshots/Collection.png" width="700"/>
+
+
+
 
 ## Video
+https://github.com/user-attachments/assets/7a1f9dbc-5086-4567-9cbe-d00b0dcb5b6d
 
 <video src="public/screenshots/video.mp4" controls width="150" height="auto"></video>
 
